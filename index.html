@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="fav.png" type="image/gif" sizes="16x16">
+<link rel="stylesheet" href="index.css">
+<script src="script.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" integrity="sha512-suUtSPkqYmFd5Ls30Nz6bjDX+TCcfEzhFfqjijfdggsaFZoylvTj+2odBzshs0TCwYrYZhQeCgHgJEkncb2YVQ==" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" integrity="sha512-is1TN9d5Tt0OFxQTczhF1BPaJRaNzbSRKjk9yvExCHuCgfROU67TpE+67x35lbHEaQmbUxZ1Xjq18pIFpxGNmg==" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js" integrity="sha512-/V6Lo0GhutHcr/GhXfz1P3nSdnIgXw6sv13FOWGvkgsc9CbZYq895ff+D2yubwZQoadSiEhYhEdEBYFrEvGFww==" crossorigin="anonymous"></script>
+<script type="text/javascript">
+function purpose_change()
+{
+    if (document.getElementById("purpose").value == "Select Purpose"){
+        document.getElementById("purposeErr").innerHTML = "Select Purpose !";
+        document.getElementById("purpose_display").innerHTML="";
+        var y_purpose = 0;
+    }
+    else{
+        document.getElementById("purposeErr").innerHTML = "";          
+        var purpose_code = document.getElementById("purpose").value;
+        var y_purpose = 1;
+    }      
+	
+	if (purpose_code == '32'){
+        $("#trn").show();
+        $("#atonm").hide();
+		$("#cnu").hide();
+    }
+	else if(purpose_code == '51' || purpose_code == '52' || purpose_code == '53'){
+		$("#atonm").show();
+        $("#trn").hide();
+		$("#cnu").hide();
+	}        
+	else if(purpose_code == '30'){
+		$("#cnu").hide();
+		$("#trn").hide();
+		$("#atonm").hide();
+	}	
+	else 
+	{
+        $("#atonm").hide();
+		$("#trn").hide();
+		$("#cnu").show();
+    }
+	
+    if (purpose_code == '01' || purpose_code == '02' || purpose_code == '50' || purpose_code == '57') {  //for marks memo show/hide div
+        $("#konduru").show();			
+    }
+	else{
+		$("#konduru").hide();
+	}		
+		
+    if (y_purpose == 1)
+    {
+        if (window.XMLHttpRequest)
+        {
+          xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+          if(xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+            document.getElementById("purpose_display").innerHTML=xmlhttp.responseText;
+			//var resultText = xmlhttp.responseText; //alert(resultText);            
+          }
+        }
+        xmlhttp.open("POST","online-apply-code.php?status=required_document_display&code-id1="+purpose_code);
+        xmlhttp.send();
+    }
+}
+
+function calculate_fee()
+{
+    if (document.getElementById("purpose").value == "Select Purpose") {
+        document.getElementById("purposeErr").innerHTML = "Select Purpose !";
+        document.getElementById("purpose_display").innerHTML="";
+        var y_purpose = 0;
+    }
+    else{
+        document.getElementById("purposeErr").innerHTML = "";          
+        var purpose_code = document.getElementById("purpose").value;
+        var y_purpose = 1;
+    }
+
+    if (document.getElementById("course").value == "Select Your Course") {
+        document.getElementById("courseErr").innerHTML = "Select Your Course !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_course = 0;
+    }
+    else{
+        document.getElementById("courseErr").innerHTML = "";          
+        var course_code = document.getElementById("course").value;
+        var y_course = 1;
+    }
+
+    if (document.getElementById("college").value == "Select Your College"){
+        document.getElementById("collegeErr").innerHTML = "Select Your College !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_college = 0;
+    }
+    else {
+        document.getElementById("collegeErr").innerHTML = "";          
+        var college_code = document.getElementById("college").value;
+        var y_college = 1;
+    }
+
+    if (document.getElementById("monthpass").value == "Select Your Month of Passing") {
+        document.getElementById("monthpassErr").innerHTML = "Select Your Month of Passing !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_monthpass = 0;
+    }
+    else{
+        document.getElementById("monthpassErr").innerHTML = "";          
+        var monthpass = document.getElementById("monthpass").value;
+        var y_monthpass = 1;
+    }
+
+    if (document.getElementById("yearpass").value == "Select Your Year of Passing") {
+        document.getElementById("yearpassErr").innerHTML = "Select Your Year of Passing !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_yearpass = 0;
+    }
+    else{
+        document.getElementById("yearpassErr").innerHTML = "";          
+        var yearpass = document.getElementById("yearpass").value;
+        var y_yearpass = 1;
+    }		
+	//*** GETING EXTRA VALUES FOR TRANSCRIPTS ****//		
+	if(purpose_code == '32'){
+		var papcount = document.getElementById("papers").value;
+		var setcount = document.getElementById("sets").value;
+		var wes      = document.querySelector('.chk:checked').value;		
+		var personal = document.getElementById("personal").value;			  
+	}
+	if(purpose_code == '51' || purpose_code == '52' || purpose_code == '53'){
+		var stucount = document.getElementById("studen").value;						  
+	}		
+    if (document.getElementById("tatkal").checked) {
+        var tatkal='1';
+    }
+    else {
+        var tatkal='0'; 
+    } 		
+		
+	var adyear = document.getElementById("adyear").value;		
+	if (purpose_code == "06" && (course_code == "10" || course_code == "16" || course_code == "63")){
+		alert('THIS COURSE NOT ELIGIABLE FOR CMM');
+		return false;
+	}
+	if (purpose_code == "06" && adyear < "2015" && course_code == "09" || purpose_code == "06" && adyear < "2015" && course_code == "10"){
+		alert('NOT ELIGIABLE FOR CMM BEFORE 2015 Batches');
+		return false;
+	}
+	if (tatkal == "1" && purpose_code == "34"){
+		alert('Tatkal option is not applicable for Equivalence Certificate');
+		return false;
+	}                
+	if (course_code == "51" && purpose_code == "06" || course_code == "28" && purpose_code == "06" || course_code == "30" && purpose_code == "06" || course_code == "45" && purpose_code == "06" ||  course_code == "16" && purpose_code == "06" ){
+		alert("NOT ELIGIABLE FOR Applying CMM ");
+		return false;
+	}
+		
+	//alert(purpose_code)
+    if (y_purpose == 1 && y_course == 1 && y_college == 1 && y_monthpass == 1 && y_yearpass == 1)
+    {
+        if (window.XMLHttpRequest)
+        {
+          xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+          if(xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+            document.getElementById("fee_display").innerHTML=xmlhttp.responseText;
+            //alert(document.getElementById("fee_display").innerHTML);exit;
+            
+            if(purpose_code=='31'||purpose_code=='98')
+            {
+              //document.getElementById("currency").innerHTML="DOLLARS.";
+              document.getElementById("currency").innerHTML="$ (USD)";  
+            }
+            else
+            {
+              document.getElementById("currency").innerHTML="(In Rupees)";  
+            }
+
+            document.getElementById("continue_button_display").innerHTML="<input class='btn btn-primary center-block' type='submit' name='next_step1' id='next_step1' onclick='myFunction();' value='Continue'>";
+          }
+        }
+
+        if(purpose_code=='32'){
+			xmlhttp.open("POST","online-apply-code.php?status=calculate_fee&code-id1="+purpose_code+"&code-id2="+course_code+"&code-id3="+monthpass+"&code-id4="+yearpass+"&code-id5="+tatkal+"&papcount="+papcount+"&sets="+setcount+"&wes="+wes+"&personal="+personal);
+        }
+		else if(purpose_code=='51' || purpose_code=='52' || purpose_code=='53'){
+			xmlhttp.open("POST","online-apply-code.php?status=calculate_fee&code-id1="+purpose_code+"&code-id2="+course_code+"&code-id3="+monthpass+"&code-id4="+yearpass+"&code-id5="+tatkal+"&stucount="+stucount);
+		}
+		else{
+            xmlhttp.open("POST","online-apply-code.php?status=calculate_fee&code-id1="+purpose_code+"&code-id2="+course_code+"&code-id3="+monthpass+"&code-id4="+yearpass+"&code-id5="+tatkal);
+        }
+		xmlhttp.send();
+    }
+}
+
+function myFunction() 
+{      
+    var r = confirm("Are you Sure to pay the amount for the selected purpose,confirm first.Once Paid the amount will not be refunded.");
+    if (r == true) {
+			next_step1();
+    }else {        
+		window.location.href = "apply-online-certificates.php";
+    }       
+}
+
+function next_step1()
+{
+    if (document.getElementById("purpose").value == "Select Purpose") {
+        document.getElementById("purposeErr").innerHTML = "Select Purpose !";
+        document.getElementById("purpose_display").innerHTML="";
+        var y_purpose = 0;
+    }
+    else{
+        document.getElementById("purposeErr").innerHTML = "";          
+        var purpose_code = document.getElementById("purpose").value;
+        var y_purpose = 1;
+    }
+
+    if (document.getElementById("course").value == "Select Your Course"){
+        document.getElementById("courseErr").innerHTML = "Select Your Course !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_course = 0;
+    }
+    else{
+        document.getElementById("courseErr").innerHTML = "";          
+        var course_code = document.getElementById("course").value;
+        var y_course = 1;
+    }
+
+    if (document.getElementById("college").value == "Select Your College"){
+        document.getElementById("collegeErr").innerHTML = "Select Your College !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_college = 0;
+    }
+    else{
+        document.getElementById("collegeErr").innerHTML = "";          
+        var college_code = document.getElementById("college").value;
+        var y_college = 1;
+    }
+
+    if (document.getElementById("monthpass").value == "Select Your Month of Passing"){
+        document.getElementById("monthpassErr").innerHTML = "Select Your Month of Passing !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_monthpass = 0;
+    }
+    else{
+        document.getElementById("monthpassErr").innerHTML = "";          
+        var monthpass = document.getElementById("monthpass").value;
+        var y_monthpass = 1;
+    }
+
+    if (document.getElementById("yearpass").value == "Select Your Year of Passing") {
+        document.getElementById("yearpassErr").innerHTML = "Select Your Year of Passing !";
+        document.getElementById("fee_display").innerHTML="";
+        var y_yearpass = 0;
+    }
+    else{
+        document.getElementById("yearpassErr").innerHTML = "";          
+        var yearpass = document.getElementById("yearpass").value;
+        var y_yearpass = 1;
+    }
+		
+	if(purpose_code == '32'){
+		var papcount = document.getElementById("papers").value;
+		var setcount = document.getElementById("sets").value;
+		var wes = document.querySelector('.chk:checked').value;		
+		var personal = document.getElementById("personal").value;
+	}	
+	if(purpose_code == '52' || purpose_code == '53'){
+		var stucount = document.getElementById("studen").value;						  
+	}
+	if(purpose_code == '02' || purpose_code == '01' || purpose_code == '50'){
+		var sem = document.getElementById("sem").value;			
+	}		
+    if (document.getElementById("tatkal").checked) {
+        var tatkal='1';
+    }
+    else {
+        var tatkal='0'; 
+    }
+	
+    var random_code = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);   
+    var fee_amt0 = document.getElementById("fee_display").innerHTML;        
+	var res = fee_amt0.split(":");
+	var fee_amt = res[1].trim();         		
+    var fee_curr = document.getElementById("currency").innerHTML;       
+       
+    if (y_purpose == 1 && y_course == 1 && y_college == 1 && y_monthpass == 1 && y_yearpass == 1)
+    {
+        if (window.XMLHttpRequest)
+        {
+          xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+          if(xmlhttp.readyState==4 && xmlhttp.status==200)
+          {            
+            window.open("apply-online-step2.php?rcode="+random_code,"_self");
+          }
+        }	
+		
+		if(purpose_code=='32'){  
+			xmlhttp.open("POST","online-apply-code.php?status=transcript_pre_next_step1&code-id1="+purpose_code+"&code-id2="+course_code+"&code-id3="+college_code+"&code-id4="+monthpass+"&code-id5="+yearpass+"&code-id7="+random_code+"&code-id8="+fee_amt+"&code-id9="+fee_curr+"&papcount="+papcount+"&sets="+setcount+"&wes="+wes+"&personal="+personal); 
+        }
+		else if(purpose_code=='52' || purpose_code=='53'){ //*** Autonumous college od &cmm ***//		    
+			xmlhttp.open("POST","online-apply-code.php?status=student_pre_next_step1&code-id1="+purpose_code+"&code-id2="+course_code+"&code-id3="+college_code+"&code-id4="+monthpass+"&code-id5="+yearpass+"&code-id7="+random_code+"&code-id8="+fee_amt+"&code-id9="+fee_curr+"&stucount="+stucount); 
+        }
+		else {
+			xmlhttp.open("POST","online-apply-code.php?status=pre_next_step1&code-id1="+purpose_code+"&code-id2="+course_code+"&code-id3="+college_code+"&code-id4="+monthpass+"&code-id5="+yearpass+"&code-id6="+tatkal+"&code-id7="+random_code+"&code-id8="+fee_amt+"&code-id9="+fee_curr+"&sem="+sem);
+        }
+		xmlhttp.send();
+    }    
+}
+
+//*** RELOAD DATA WHEN CHANGE VALUES IN BELOW FIELDS ***// WITHOUT THIS, IT CANT RELOAD VALUES //
+function course_change(){
+	document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+function monthpass_change() {
+    document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+function yearpass_change(){
+    document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+function tatkal_change(){
+    document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+function papers() {
+    document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+function sets(){
+    document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+function wes(){
+    document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+function wesno(){
+    document.getElementById("fee_display").innerHTML= "";
+    document.getElementById("currency").innerHTML= "";
+    document.getElementById("continue_button_display").innerHTML= "";
+}
+</script>
+<style>
+@font-face {
+	font-family: "myFont";
+	src: url("K2D-Regular.ttf");
+}
+*{
+	font-family: myFont;
+}		 
+body{
+background-color: rgb(82, 86, 89);
+    color: var(--primary-text-color);
+    line-height: 154%;
+    margin: 0;
+}
+#plugin {
+    background: #fffff7;
+    border: 0 none;
+    border-radius: 0px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 4px 62px;
+    box-sizing: border-box;
+    width: 75%;
+    margin: 1% 12%;
+    position: relative;
+    border-radius: 4px;
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#watermark {
+    background-image: url('watermark.png');
+	background-repeat: no-repeat;
+	background-position:center;	
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+input.largerCheckbox { 
+    width: 20px; 
+    height: 20px; 
+}
+.checkboxes {
+  text-align:center;
+}
+.checkboxes input{
+  margin: 0 5px 0 30px;
+}
+#cnu1 img {
+height: 100%;
+max-width: 100%;
+display: block;
+margin: auto;
+}
+.form-group {
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #c5c5c5;
+    border-radius: 3px;
+    height: 34px;
+}
+</style>
+<script>
+document.onkeydown = function (e) { 
+	if (event.keyCode == 123) { 
+        return false; 
+    } 
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { 
+       return false; 
+   } 
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { 
+        return false; 
+    } 
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { 
+        return false; 
+    } 
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { 
+        return false; 
+    } 
+} 
+</script>
+</head>
+
+<!--<body oncontextmenu="return false">-->
+<body>
+<div class="container" id="plugin">  
+	<div id="cnu1"> 
+		<img src="images/svu.png" alt="Apply for Certificates/Transcripts/Genuine Verification" style="display: flex;"><br>
+	</div>			
+	<h5 style="text-align:center;font-size:18px;color:#e58611;font-weight:600;background-image:linear-gradient(38deg, rgb(206, 187, 171) 0%, rgba(97,206,251,1) 35%, rgb(210 240 255) 69%);margin:0 auto;padding-bottom: 5px;padding-top: 5px;border-radius: 3px;">&nbsp;&nbsp; SRI VENKATESWARA UNIVERSITY SERVICES</h5>			
+	<div class="panel panel-default" id="watermark" style="margin:0 auto;">
+		<div class="panel-heading">
+			<h4 class="panel-title"><b>Application for Certificates, Transcripts & Genuiness Verification</b></h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">						   					
+				<div class="form-group col-xs-9">	
+					<label class="control-label">Select Purpose</label>		
+					<select name="purpose" id="purpose" class="form-control select2" onchange="purpose_change();" style="width:100%">
+						<option value="">Select</option>
+						<option value=01>01-Marks (Duplicate)</option>
+                        <option value=02>02-Marks (Triplicate)</option>
+                        <option value=03>03-Provisional Certificate</option>
+                        <option value=04>04-Provisional Certificate (Duplicate)</option>
+                        <option value=05>05-Transcripts</option>
+                        <option value=06>06-Original Degree</option>
+                        <option value=07>07-Transfer Certificate</option>
+                        <option value=08>08-Consolidated Marks Memo</option>
+                    </select><span id="purposeErr" style="color: red;"></span>
+				</div>							
+				<div class="form-group col-xs-12">
+					<span id="purpose_display"></span>
+				</div>							
+				<div class="form-group col-xs-9">	
+					<label class="control-label">      Select Course  </label>								
+					<select class="form-control select2" name="course" id="course" onChange="course_change()" style="width:100%">
+						<option value="Select Your Course">Select</option>
+						<option value=01>01-B.Tech</option>
+                        <option value=02>02-MBA</option>
+                        <option value=03>03-LLB</option>
+                        <option value=04>04-B.PEd</option>
+                        <option value=05>05-M.sc</option>
+                        <option value=06>06-M.Tech</option>
+                        <option value=07>07-Distance-Education</option>
+                        <option value=08>08-P.Hd</option>    
+                    </select> 
+                        <span id="courseErr" style="color: red;"></span>
+				</div>						
+				<div class="form-group col-xs-9">	
+					<label class="control-label"> Select College </label>								
+					<select class="form-control select2" name="college" id="college" style="width:100%">
+						<option value="Select Your College">Select</option>
+						<option value=1>1-DEPARTMENT OF Chemical Engineer</option>
+                        <option value=2>1-DEPARTMENT OF Civil Engineering</option>
+                        <option value=3>1-DEPARTMENT OF Electrical Engineering</option>
+                        <option value=4>1-DEPARTMENT OF Electronics and Communication Engineering</option>
+                        <option value=5>1-DEPARTMENT OF Mechanical Engineering</option>
+                        <option value=6>1-DEPARTMENT OF Computer Science Engineering</option>
+                        <option value=7>1-DEPARTMENT OF Bussiness Adminstration</option>
+                        <option value=8>1-DEPARTMENT OF LAW</option>
+                        <option value=9>1-DEPARTMENT OF Physical Education</option>
+                        <option value=10>1-DEPARTMENT OF Distance Education</option>
+                    				</select> <span id="collegeErr" style="color: red;"></span>
+				</div>						
+				<div class="form-group col-xs-6">							 
+					<label class="control-label"> Select Month of Passing </label>
+					<div class="inner-addon left-addon">
+						<select class="form-control" name="monthpass" id="monthpass" onChange="monthpass_change()" style="width:100%">
+							<option value="Select Your Month of Passing">Select</option>
+							<option value='01'>January</option>
+							<option value='02'>February</option>
+							<option value='03'>March</option>
+							<option value='04'>April</option>
+							<option value='05'>May</option>
+							<option value='06'>June</option>
+							<option value='07'>July</option>
+							<option value='08'>August</option>
+							<option value='09'>September</option>
+							<option value='10'>October</option>
+							<option value='11'>November</option>
+							<option value='12'>December</option>
+						</select> <span id="monthpassErr" style="color: red;"></span>
+					</div>
+				</div>							
+				<div class="form-group col-xs-6">
+					<label class="control-label"> Select Year of Passing </label>
+					<div class="inner-addon right-addon">							 
+						<select class="form-control" name="yearpass" id="yearpass" onChange="yearpass_change()" style="width:100%">
+							<option value="Select Your Year of Passing">Select</option>
+							<script>
+							var myDate = new Date();
+							var year = myDate.getFullYear();
+							for(var i = 1970; i < year+1; i++){
+								document.write('<option value="'+i+'">'+i+'</option>');
+							}
+							</script>
+							<script>
+							function showdrop_app(ele) {
+							val = ele.value;
+							if(val!=0){
+								_data = 'v='+val;
+								_type = 'GET';
+								_url = 'eval.php';
+								$.ajax({
+								data:_data,
+								url:_url,
+								type:_type,
+								success:function(rdata){
+									$('#curdate').html(rdata.trim());
+								}
+								});
+							}
+							else{
+							}
+							}
+							</script>
+						</select> <span id="yearpassErr" style="color: red;"></span>
+					</div>
+				</div>						
+				<div class="form-group col-xs-6">
+					<label class="control-label">  Select Admitted Year </label>
+					<div class="inner-addon right-addon">							 
+						<select class="form-control" name="adyear" id="adyear" style="width:100%">
+							<option value="Select Your Year of Passing">Select</option>
+							<script>
+							var myDate = new Date();
+							var year = myDate.getFullYear();
+							for(var i = 1970; i < year+1; i++)
+							{
+								document.write('<option value="'+i+'">'+i+'</option>');
+							}
+							</script>
+							<script>
+							function showdrop_app(ele)
+							{
+								val = ele.value;
+								if(val!=0)
+								{
+									_data = 'v='+val;
+									_type = 'GET';
+									_url = 'eval.php';
+									$.ajax({
+										data:_data,
+										url:_url,
+										type:_type,
+										success:function(rdata){
+											$('#curdate').html(rdata.trim());
+										}
+									});
+								}
+								else{
+								}
+							}
+							</script>
+						</select><span id="yearpassErr" style="color: red;"></span>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<label for="letter">Upload request letter</label>
+							<input type="file" id="letter" name="letter" placeholder="upload your file" required accept=".pdf">
+						</div>
+						<div  class="col-xs-6">
+							<label for="collegeid">Upload college id or X mark list</label>
+							<input type="file" id="collegeid" name="collegeid" placeholder="upload your file" accept=".pdf" required>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="form-group col-xs-6" id="cnu">
+						<label class="control-label"> Check for Tatkal Application </label>
+						<div class="inner-addon right-addon">								  
+						<input class="largerCheckbox" type="checkbox" value="tatkal" id="tatkal" name="tatkal" onclick="tatkal_change()">
+					</div> -->
+				</div>						 
+			
+				<div id="trn" style="display:none;">
+					<div class="form-group col-xs-6">
+						<label for="yearpass">Number of Papers </label>
+						<input type="text" class="form-control" id="papers" name="papers" placeholder="Enter Number of Papers" autocomplete="off" onChange="papers()" required>
+					</div> 
+					<div class="form-group col-xs-6">
+						<label for="yearpass">Number of Sets</label>
+						<input type="text" class="form-control" id="sets" name="sets" autocomplete="off"placeholder="Enter Number of Sets" onChange="sets()" required>
+						<span id="docmanual"><b><a href="https://services.andhrauniversity.edu.in/docmanual.php">Help Manual For Applying Transcripts.</a></b></span>
+					</div> 							
+					<div class="form-group col-xs-6">
+						<div class="checkboxes">	
+							<input type="radio"    name="personal" value="personal" id="personal" required checked> I will Collect Personally <br>
+							<span style="color:red"> (Mandatory: Select WES/Without WES) </span> <br>
+							<input type="checkbox" class="chk" name="wes[]" id="wes"  value="wes" onChange="wes()"  /> Include WES 				   <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+							<input type="checkbox" class="chk" name="wes[]" id="wes"  value="wesno" onChange="wesno()" /> Without WES Charge						   
+						</div>
+					</div>
+				</div>							
+				<div id="atonm" style="display:none;">
+					<div class="form-group col-xs-6">
+						<label for="yearpass">Number of students </label>
+						<input type="text" class="form-control" id="studen" name="studen" placeholder="Enter Number of Student" autocomplete="off" onChange="papers()" required>
+					</div> 															
+				</div>							
+			</div>	
+			<div class="form-group col-xs-6" id="konduru" style="display:none;">							 
+				<label class="control-label"> Select Semester </label>
+				<div class="inner-addon left-addon">
+					<select class="form-control" name="sem" id="sem" style="width:100%">
+						<option selected>Select</option>
+						<option value='1-1'>1-1</option>
+						<option value='1-2'>1-2</option>
+						<option value='2-1'>2-1</option>
+						<option value='2-2'>2-2</option>
+						<option value='3-1'>3-1</option>
+						<option value='3-2'>3-2</option>
+						<option value='4-1'>4-1</option>
+						<option value='4-2'>4-2</option>
+						<option value='5-1'>5-1</option>
+						<option value='5-2'>5-2</option>
+						<option value='6-1'>6-1</option>
+						<option value='6-2'>6-2</option>
+						<option value='1-0'>1-0</option>
+						<option value='2-0'>2-0</option>
+						<option value='3-0'>3-0</option>
+						<option value='4-0'>4-0</option>
+						<option value='5-0'>5-0</option>
+						<option value='6-0'>6-0</option>										  
+					</select>
+				</div>
+			</div>							
+			<div class="form-group">
+				<input class="btn btn-primary center-block" type='submit' name='calculate_fee' id='calculate_fee' onclick='calculate_fee()' value='Calculate Fee'>
+			</div>							
+			<div class="row">						
+				<div class="form-group" style="text-align:center; font-weight: bold;font-size: 20px;color:#22ad08">
+					<span id="fee_display"></span> <span id="currency"></span>
+				</div>
+				<div class="form-group">
+					<span id="continue_button_display"></span>
+				</div>											
+			</div>					
+		</div>
+    </div><br> 
+	<a href="pay_receipt.php" style="float:right;" class="btn btn-success">Pay and Proceed</a><br><br>
+</div>
+<script>
+$('.select2').select2();
+</script>	
+<script>
+$(document).ready(function(){
+  $('[type="checkbox"]').change(function(){  
+    if(this.checked){
+       $('[type="checkbox"]').not(this).prop('checked', false);
+    }    
+  });
+});
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

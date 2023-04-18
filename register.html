@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+<style>
+    body {
+  background-image: url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+#cnu1 img {
+height: 100%;
+max-width: 100%;
+display: block;
+margin: auto;
+}
+
+.register-header {
+  background-color: #ffffff;
+  padding: 20px;
+  align-items: center;
+}
+
+.register-header-container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.register-title {
+  font-size: 24px;
+  color: #333333;
+  margin: 0;
+}
+
+.register-logo {
+  width: 100px;
+  height: 100px;
+}
+
+.register-container {
+  max-width: 400px;
+  margin: 10px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.1), 0px 2px 5px rgba(0,0,0,0.1);
+
+}
+.register-container h1{
+    margin: 10px 150px;
+}
+
+.register-form {
+  margin-bottom: 20px;
+}
+
+.register-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.register-input {
+  width: 380px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+}
+
+.register-submit {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.login-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+}
+</style>
+
+</head>
+<body>
+  <header class="register-header">
+    <div id="cnu1"> 
+		<img src="images/svu.png" alt="Apply for Certificates/Transcripts/Genuine Verification" style="display: flex;"><br>
+	</div>	  
+  </header>
+  <div class="register-container">
+    <h1>Register</h1>
+    <form class="register-form" action="http://localhost:3000/api/auth/signup" method="post">
+      <label for="Name" class="register-label">Enter your name: </label>
+      <input type="text" id="Name" name="userName" placeholder="Enter your name" class="register-input" required>
+      <label for="user-id" class="register-label">Enter your Roll no: </label>
+      <input type="text" id="college-name" name="rollNumber" placeholder="Enter your Roll No" class="register-input" required>
+      <label for="college-name" class="register-label">Enter your College name: </label>
+      <select type="text" id="user-id" name="collegeName" placeholder="Enter your college-name" class="register-input" required><option value="SVU College of Engineering">SVU College of Engineering</option><option value="SVU College of Distance Education">SVU College of Distance Education</option><option value="SVU College of Physical education">SVU College of Physical education</option><option value="SVU College of sciecne">SVU College of sciecne</option></option></select>
+      <label for="Branch" class="register-label">Enter your Branch: </label>
+      <input type="text" id="Branch" name="branchName" placeholder="Enter your Branch" class="register-input" required>
+      <label for="Email" class="register-label">Enter your email: </label>
+      <input type="email" id="Email" name="email" placeholder="Enter your email:" class="register-input" required>
+      <label for="password" class="register-label">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" class="register-input" required>
+      <!-- <label for="confirm_password" class="register-label">Re-enter Password:</label>
+      <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter your password" class="register-input" required> -->
+      <input type="submit" value="Submit" class="register-submit">
+      
+    </form>
+    <button class="login-button">
+        <a href="login.html" class="login-button">Already have an account? Login</a>
+    </button>
+  </div>
+</body>
+</html>
