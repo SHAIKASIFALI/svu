@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .admin-dashboard {
+      width: 1000px;
+      margin: 100px auto;
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-top: 0;
+    }
+
+    .welcome-msg {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      border-radius: 3px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+    #cnu1 img {
+      height: 100%;
+      max-width: 100%;
+      display: block;
+      margin: auto;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  </style>
+  <body>
+    <div class="admin-dashboard">
+      <header class="login-header">
+        <div id="cnu1">
+          <img
+            src="../images/svu.png"
+            alt="Apply for Certificates/Transcripts/Genuine Verification"
+            style="display: flex"
+          /><br />
+        </div>
+      </header>
+      <h1>Hello Admin!</h1>
+      <p class="welcome-msg">Welcome to the Admin Dashboard.</p>
+      <div class="buttons">
+        <button>
+          <a href="./userslist.html"
+            >Do you want to view users list? Click here</a
+          >
+        </button>
+        <button>
+          <a href="./requests.html"
+            >Do you want to view requests list? Click here</a
+          >
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function viewUsersList() {
+        // Add code to handle view users list action
+        console.log("View Users List");
+      }
+
+      function viewRequestsList() {
+        // Add code to handle view requests list action
+        console.log("View Requests List");
+      }
+    </script>
+  </body>
+</html>

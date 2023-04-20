@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login Form</title>
+        <style>
+            body {
+                background-image: url("background.jpg");
+                background-size: cover;
+                background-position: center;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            #cnu1 img {
+                height: 100%;
+                max-width: 100%;
+                display: block;
+                margin: auto;
+            }
+
+            .login-header {
+                background-color: #ffffff;
+                padding: 20px;
+                align-items: center;
+            }
+
+            .login-header-container {
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .login-title {
+                font-size: 24px;
+                color: #333333;
+                margin: 0;
+            }
+
+            .login-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .login-container {
+                max-width: 400px;
+                margin: 10px auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1),
+                    0px 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            .login-container h1 {
+                margin: 10px 150px;
+            }
+
+            .login-form {
+                margin-bottom: 20px;
+            }
+
+            .login-label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #333333;
+            }
+
+            .login-input {
+                width: 380px;
+                padding: 10px;
+                margin: 10px auto;
+                border: 1px solid #cccccc;
+                border-radius: 3px;
+            }
+
+            .login-submit {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #ffffff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .login-button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #ffffff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .register-button {
+                width: 100%;
+                padding: 10px;
+                background-color: #28a745;
+                color: #ffffff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="login-header">
+            <div id="cnu1">
+                <img
+                    src="../images/svu.png"
+                    alt="Apply for Certificates/Transcripts/Genuine Verification"
+                    style="display: flex"
+                /><br />
+            </div>
+        </header>
+        <div class="login-container">
+            <h1>Login</h1>
+            <form
+                class="login-form"
+                action="http://localhost:3000/api/auth/login"
+                method="post"
+            >
+                <!-- <label for="user-id" class="login-label">User ID </label>
+      <input type="text" id="user-id" name="user-id" placeholder="Enter your Roll No" class="login-input" required>
+     -->
+                <label for="Email" class="login-label"
+                    >Enter your email:
+                </label>
+                <input
+                    type="email"
+                    id="Email"
+                    name="email"
+                    placeholder="Enter your email:"
+                    class="login-input"
+                    required
+                />
+                <label for="password" class="login-label">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    class="login-input"
+                    required
+                />
+
+                <button class="login-submit">
+                    <a href="./index.html" class="login-button">Login </a>
+                </button>
+            </form>
+            <button class="register-button">
+                <a href="./register.html" class="register-button"
+                    >Register Here</a
+                >
+            </button>
+        </div>
+    </body>
+</html>

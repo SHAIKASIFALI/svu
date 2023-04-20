@@ -15,6 +15,41 @@
 <script type="text/javascript">
 function purpose_change()
 {
+
+
+
+	//start
+	var purpose_select = document.getElementById("purpose");
+	var selected_option = purpose_select.options[purpose_select.selectedIndex].text;
+	var form_group = document.getElementsByClassName("form-group col-xs-9")[0];
+	
+	if(selected_option === "01-Marks (Duplicate)") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹500";
+	} else if(selected_option === "02-Marks (Triplicate)") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹1000";
+	} else if(selected_option === "03-Provisional Certificate") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹1500";
+	} else if(selected_option === "04-Provisional Certificate (Duplicate)") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹600";
+	} else if(selected_option === "05-Transcripts") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹1400";
+	} else if(selected_option === "06-Original Degree") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹1100";
+	} else if(selected_option === "07-Transfer Certificate") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹800";
+	} else if(selected_option === "08-Consolidated Marks Memo") {
+	  document.getElementById("calculate_fee").value = "Total Fee: ₹900";
+	} else {
+	  document.getElementById("calculate_fee").value = "Total Fee";
+	}
+	
+	form_group.innerHTML = "<label class='control-label'>Selected Purpose:</label><p>" + selected_option + "</p>";
+  }
+
+  
+	//end
+
+
     if (document.getElementById("purpose").value == "Select Purpose"){
         document.getElementById("purposeErr").innerHTML = "Select Purpose !";
         document.getElementById("purpose_display").innerHTML="";
@@ -76,10 +111,14 @@ function purpose_change()
         xmlhttp.open("POST","online-apply-code.php?status=required_document_display&code-id1="+purpose_code);
         xmlhttp.send();
     }
-}
+
 
 function calculate_fee()
 {
+
+	if(document.getElementById("purpose")==="01"){
+		document.getElementById("calculate_fee").value.innerHTML="500"
+	}
     if (document.getElementById("purpose").value == "Select Purpose") {
         document.getElementById("purposeErr").innerHTML = "Select Purpose !";
         document.getElementById("purpose_display").innerHTML="";
@@ -401,6 +440,7 @@ background-color: rgb(82, 86, 89);
     padding: 4px 62px;
     box-sizing: border-box;
     width: 75%;
+	height: 900px;
     margin: 1% 12%;
     position: relative;
     border-radius: 4px;
@@ -469,7 +509,7 @@ document.onkeydown = function (e) {
 <body>
 <div class="container" id="plugin">  
 	<div id="cnu1"> 
-		<img src="images/svu.png" alt="Apply for Certificates/Transcripts/Genuine Verification" style="display: flex;"><br>
+		<img src="../images/svu.png" alt="Apply for Certificates/Transcripts/Genuine Verification" style="display: flex;"><br>
 	</div>			
 	<h5 style="text-align:center;font-size:18px;color:#e58611;font-weight:600;background-image:linear-gradient(38deg, rgb(206, 187, 171) 0%, rgba(97,206,251,1) 35%, rgb(210 240 255) 69%);margin:0 auto;padding-bottom: 5px;padding-top: 5px;border-radius: 3px;">&nbsp;&nbsp; SRI VENKATESWARA UNIVERSITY SERVICES</h5>			
 	<div class="panel panel-default" id="watermark" style="margin:0 auto;">
@@ -482,14 +522,14 @@ document.onkeydown = function (e) {
 					<label class="control-label">Select Purpose</label>		
 					<select name="purpose" id="purpose" class="form-control select2" onchange="purpose_change();" style="width:100%">
 						<option value="">Select</option>
-						<option value=01>01-Marks (Duplicate)</option>
+						<option value=01 id="01">01-Marks (Duplicate)</option>
                         <option value=02>02-Marks (Triplicate)</option>
-                        <option value=03>03-Provisional Certificate</option>
-                        <option value=04>04-Provisional Certificate (Duplicate)</option>
-                        <option value=05>05-Transcripts</option>
-                        <option value=06>06-Original Degree</option>
-                        <option value=07>07-Transfer Certificate</option>
-                        <option value=08>08-Consolidated Marks Memo</option>
+                        <option value=03 >03-Provisional Certificate</option>
+                        <option value=04 >04-Provisional Certificate (Duplicate)</option>
+                        <option value=05 >05-Transcripts</option>
+                        <option value=06 >06-Original Degree</option>
+                        <option value=07 >07-Transfer Certificate</option>
+                        <option value=08 >08-Consolidated Marks Memo</option>
                     </select><span id="purposeErr" style="color: red;"></span>
 				</div>							
 				<div class="form-group col-xs-12">
@@ -620,12 +660,12 @@ document.onkeydown = function (e) {
 					</div>
 					<div class="row">
 						<div class="col-xs-6">
-							<label for="letter">Upload request letter</label>
-							<input type="file" id="letter" name="letter" placeholder="upload your file" required accept=".pdf">
+							<label for="letter">Upload request letter Google drive link</label>
+							<input type="url" id="letter" name="requestLetterLink" placeholder="upload your file link" >
 						</div>
 						<div  class="col-xs-6">
-							<label for="collegeid">Upload college id or X mark list</label>
-							<input type="file" id="collegeid" name="collegeid" placeholder="upload your file" accept=".pdf" required>
+							<label for="collegeid">Upload college id or X mark list Google drive link</label>
+							<input type="url" id="collegeid" name="xCertificateLink" placeholder="upload your file link">
 						</div>
 					</div>
 				</div>
@@ -700,8 +740,9 @@ document.onkeydown = function (e) {
 				</div>											
 			</div>					
 		</div>
+		<a href="pay_receipt.php" style="float:right; margin-top:20px;" class="btn btn-success">Pay and Proceed</a><br><br>
     </div><br> 
-	<a href="pay_receipt.php" style="float:right;" class="btn btn-success">Pay and Proceed</a><br><br>
+	
 </div>
 <script>
 $('.select2').select2();
